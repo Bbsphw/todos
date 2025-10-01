@@ -38,9 +38,10 @@ To run this project locally, you will need:
     ```
 3.  **Run the application:**
     ```bash
-    # Example: npm start
-    # Example: python main.py
-    ```
+    # Example: npx expo start
+   
+    ```cmd
+    # Example: npx expo start
 
 ## 💻 Usage
 
