@@ -16,7 +16,7 @@ const db = getFirestore(todoApp);
 const todoColl = collection(db, "todos");
 const userColl = collection(db, "users");
 
-export const getAllTodos = async (success, unseccess) => {
+export const getAllTodos = async (success, unsuccess) => {
   console.log(`getAllTodos active`);
   try {
     const qry = query(todoColl);
@@ -27,6 +27,26 @@ export const getAllTodos = async (success, unseccess) => {
       success(doc);
     });
   } catch (e) {
-    unseccess(e);
+    unsuccess(e);
+  }
+};
+
+export const getUserByEmail = async (email, success, unsuccess) => {
+  console.log(`email: ${email}`);
+  let userRefID;
+  try {
+    let qry = query(userColl, where("email", "==", email));
+    let qrySnapshot = await getDocs(qry);
+    qrySnapshot.forEach((doc) => {
+      userRefID = doc.ref;
+    });
+    console.log(`userRefID: ${userRefID}`);
+    qry = query(todoColl, where("user_id", "==", userRefID));
+    qrySnapshot = await getDocs(qry);
+    qrySnapshot.forEach((doc) => {
+      success(doc);
+    });
+  } catch (e) {
+    unsuccess(e);
   }
 };
