@@ -39,9 +39,6 @@ To run this project locally, you will need:
 3.  **Run the application:**
     ```bash
     # Example: npx expo start
-   
-    ```cmd
-    # Example: npx expo start
 
 ## 💻 Usage
 
