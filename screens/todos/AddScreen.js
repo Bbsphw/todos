@@ -7,8 +7,9 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../../redux/todos/todosSlicer";
+import * as TodosModel from "../../firebase/todosModel";
 
 export const AddScreen = (props) => {
   const navigation = props.nav.navigation;
@@ -17,11 +18,24 @@ export const AddScreen = (props) => {
   // console.log(`addTodo: ${addTodo}`)
   const dispatch = useDispatch();
 
+  const users = useSelector((state) => state.users);
+
   const [task, setTask] = useState();
+
+  const success = (docRef_id) => {
+    //insert task to redux
+    dispatch(addTodo({ id: docRef_id, task: task }));
+    setTask("");
+  };
+  const unsuccess = (error) => {
+    console.log(`Error ${error}`);
+  };
+
   const onSavePress = () => {
     // addTodo(task);
-    dispatch(addTodo(task));
-    setTask("");
+    // dispatch(addTodo(task));
+    // setTask("");
+    TodosModel.addTask(task, users, success, unsuccess);
   };
 
   return (
